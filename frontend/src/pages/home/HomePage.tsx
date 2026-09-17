@@ -416,7 +416,7 @@ export function HomePage() {
                 Para generar el embed: https://maps.google.com → compartir → insertar mapa
               */}
               <iframe
-                title="Ubicación GeneraciónX"
+                title="Ubicación Genmza"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.0168878895233!2d-58.38415842416686!3d-34.603721772953264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccac630121623%3A0x53386f2ac88991a9!2sObelisco%2C+Buenos+Aires!5e0!3m2!1ses!2sar!4v1694500000000!5m2!1ses!2sar"
                 width="100%"
                 height="420"
