@@ -28,5 +28,6 @@ export interface ServicesDB {
 export interface BudgetFormValues {
   serviceId: ServiceCategory | '';
   problemId: string;
+  deviceBrand: string;
   deviceModel: string;
 }

@@ -46,7 +46,7 @@ export function ServiceGrid({ services, selectedId, onSelect }: ServiceGridProps
               <div
                 className={[
                   'flex h-12 w-12 items-center justify-center rounded-xl transition-colors duration-300',
-                  isSelected ? 'bg-cyan-400/20 text-cyan-400' : 'bg-white/5 text-gray-400',
+                  isSelected ? 'bg-blue-500/20 text-blue-500' : 'bg-white/5 text-zinc-400',
                 ].join(' ')}
               >
                 <Icon size={24} />
@@ -56,19 +56,19 @@ export function ServiceGrid({ services, selectedId, onSelect }: ServiceGridProps
               <div>
                 <p className={[
                   'text-base font-semibold leading-tight transition-colors duration-300',
-                  isSelected ? 'text-white' : 'text-gray-200',
+                  isSelected ? 'text-white' : 'text-zinc-200',
                 ].join(' ')}>
                   {service.title}
                 </p>
-                <p className="mt-1 text-xs text-gray-500">{service.subtitle}</p>
+                <p className="mt-1 text-xs text-zinc-500">{service.subtitle}</p>
               </div>
 
               {/* Problem count badge */}
               <span className={[
                 'w-fit rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider transition-colors duration-300',
                 isSelected
-                  ? 'bg-cyan-400/15 text-cyan-400'
-                  : 'bg-white/5 text-gray-600',
+                  ? 'bg-blue-500/15 text-blue-500'
+                  : 'bg-white/5 text-zinc-600',
               ].join(' ')}>
                 {service.problems.length} opciones
               </span>
@@ -76,7 +76,7 @@ export function ServiceGrid({ services, selectedId, onSelect }: ServiceGridProps
 
             {/* Selected checkmark */}
             {isSelected && (
-              <CheckCircle2 size={16} className="absolute top-3 right-3 text-cyan-400" />
+              <CheckCircle2 size={16} className="absolute top-3 right-3 text-blue-500" />
             )}
           </Card>
         );

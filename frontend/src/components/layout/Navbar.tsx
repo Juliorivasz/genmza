@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Zap, Menu, X, ChevronRight } from 'lucide-react';
+import { Smartphone, Menu, X, ChevronRight } from 'lucide-react';
 import { BUSINESS_NAME } from '../../config/env';
 
 const NAV_LINKS = [
@@ -27,15 +27,18 @@ export function Navbar() {
       // 2. Active section spy (only makes sense on home page)
       if (location.pathname === '/') {
         let current = '';
-        const sections = ['servicios', 'nosotros', 'ubicacion'];
+        // Check sections from bottom to top
+        const sections = ['ubicacion', 'nosotros', 'servicios'];
         
         for (const section of sections) {
           const element = document.getElementById(section);
           if (element) {
             const rect = element.getBoundingClientRect();
-            // If section is reasonably within the viewport
-            if (rect.top <= window.innerHeight / 2 && rect.bottom >= 100) {
+            // If the section's top is above the middle of the viewport, it's active.
+            // Since we iterate from bottom to top, we catch the lowest visible section.
+            if (rect.top <= window.innerHeight / 2.5) {
               current = section;
+              break;
             }
           }
         }
@@ -105,14 +108,14 @@ export function Navbar() {
 
           {/* Brand */}
           <Link to="/" onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-2.5 shrink-0">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-400/15 ring-1 ring-cyan-400/40">
-              <Zap size={17} className="text-cyan-400" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500/15 ring-1 ring-blue-500/40">
+              <Smartphone size={17} className="text-blue-500" />
             </div>
             <div>
               <span className="text-base font-extrabold tracking-tight text-white">
                 {BUSINESS_NAME}
               </span>
-              <span className="hidden text-[10px] text-gray-500 lg:block leading-none mt-0.5 tracking-wide">
+              <span className="hidden text-[10px] text-zinc-500 lg:block leading-none mt-0.5 tracking-wide">
                 Servicio técnico profesional
               </span>
             </div>
@@ -132,7 +135,7 @@ export function Navbar() {
                     'px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200',
                     isActive
                       ? 'text-white bg-white/10'
-                      : 'text-gray-400 hover:text-white hover:bg-white/8',
+                      : 'text-zinc-400 hover:text-white hover:bg-white/8',
                   ].join(' ')}
                 >
                   {link.label}
@@ -145,7 +148,7 @@ export function Navbar() {
           <div className="hidden lg:flex items-center gap-3">
             <Link
               to="/presupuesto"
-              className="flex items-center gap-1.5 rounded-xl bg-cyan-400 px-5 py-2.5 text-sm font-bold text-gray-950 shadow-md shadow-cyan-400/20 transition-all duration-200 hover:bg-cyan-300 active:scale-95"
+              className="flex items-center gap-1.5 rounded-xl bg-blue-500 px-5 py-2.5 text-sm font-bold text-zinc-950 shadow-md shadow-blue-500/20 transition-all duration-200 hover:bg-blue-400 active:scale-95"
             >
               Presupuestar
               <ChevronRight size={15} />
@@ -157,7 +160,7 @@ export function Navbar() {
             <Link
               to="/presupuesto"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-1 rounded-lg bg-cyan-400 px-3.5 py-2 text-xs font-bold text-gray-950"
+              className="flex items-center gap-1 rounded-lg bg-blue-500 px-3.5 py-2 text-xs font-bold text-zinc-950"
             >
               Presupuestar
               <ChevronRight size={13} />
@@ -166,7 +169,7 @@ export function Navbar() {
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-label="Abrir menú"
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/8 border border-white/10 text-gray-300 hover:text-white transition-colors"
+              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/8 border border-white/10 text-zinc-300 hover:text-white transition-colors"
             >
               {open ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -191,7 +194,7 @@ export function Navbar() {
                     'w-full text-left px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200',
                     isActive
                       ? 'text-white bg-white/10'
-                      : 'text-gray-300 hover:text-white hover:bg-white/8',
+                      : 'text-zinc-300 hover:text-white hover:bg-white/8',
                   ].join(' ')}
                 >
                   {link.label}

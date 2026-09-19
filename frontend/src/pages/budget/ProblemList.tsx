@@ -29,8 +29,8 @@ export function ProblemList({ problems, selectedId, onSelect }: ProblemListProps
               'flex items-center justify-between w-full rounded-xl px-4 py-3.5',
               'border text-left transition-all duration-200 active:scale-[0.98]',
               isSelected
-                ? 'bg-cyan-400/10 border-cyan-400/60 text-white shadow-sm shadow-cyan-400/10'
-                : 'bg-white/5 border-white/10 text-gray-300 hover:border-white/20 hover:text-white',
+                ? 'bg-blue-500/10 border-blue-500/60 text-white shadow-sm shadow-blue-500/10'
+                : 'bg-white/5 border-white/10 text-zinc-300 hover:border-white/20 hover:text-white',
             ].join(' ')}
           >
             <span className="text-sm font-medium">{problem.label}</span>
@@ -39,7 +39,7 @@ export function ProblemList({ problems, selectedId, onSelect }: ProblemListProps
               <span
                 className={[
                   'flex items-center gap-1 shrink-0 ml-3 text-xs',
-                  isSelected ? 'text-cyan-400' : 'text-gray-600',
+                  isSelected ? 'text-blue-500' : 'text-zinc-600',
                 ].join(' ')}
               >
                 <Clock size={11} />

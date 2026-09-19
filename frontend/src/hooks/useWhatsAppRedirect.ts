@@ -22,8 +22,8 @@ export function useWhatsAppRedirect(): UseWhatsAppRedirectReturn {
         `Quiero consultar por un presupuesto:`,
         '',
         `🔧 *Servicio:* ${serviceTitle}`,
-        `❗ *Problema:* ${problemLabel}`,
-        `📱 *Modelo del equipo:* ${data.deviceModel || 'No especificado'}`,
+        `⚠️ *Problema:* ${problemLabel}`,
+        `📱 *Equipo:* ${data.deviceBrand} ${data.deviceModel || 'No especificado'}`,
         '',
         `¿Me podrían dar más información? ¡Gracias!`,
       ];

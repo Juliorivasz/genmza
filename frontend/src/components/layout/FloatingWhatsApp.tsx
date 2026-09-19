@@ -29,7 +29,7 @@ export function FloatingWhatsApp() {
         type="button"
         onClick={() => setDismissed(true)}
         className={[
-          'flex h-6 w-6 items-center justify-center rounded-full bg-gray-800/80 text-gray-400 hover:text-white transition-all duration-200 border border-white/10',
+          'flex h-6 w-6 items-center justify-center rounded-full bg-zinc-800/80 text-zinc-400 hover:text-white transition-all duration-200 border border-white/10',
           hovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none',
           'hidden lg:flex',
         ].join(' ')}
