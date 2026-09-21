@@ -7,6 +7,7 @@
       "title": "Reparación de Celulares",
       "subtitle": "Pantallas, baterías y más",
       "icon": "Smartphone",
+      "image": "https://images.unsplash.com/photo-1639776738932-956082f0b704?q=80&w=800&auto=format&fit=crop",
       "problems": [
         {
           "id": "pantalla_rota",
@@ -60,6 +61,7 @@
       "title": "Reparación de PC / Notebook",
       "subtitle": "Hardware, software y diagnóstico",
       "icon": "Laptop",
+      "image": "https://images.unsplash.com/photo-1721332154191-ba5f1534266e?q=80&w=800&auto=format&fit=crop",
       "problems": [
         {
           "id": "no_enciende_pc",
@@ -118,6 +120,7 @@
       "title": "Protectores de Pantalla",
       "subtitle": "Vidrio templado y láminas",
       "icon": "Shield",
+      "image": "https://images.unsplash.com/photo-1694878981905-b742a32f8121?q=80&w=800&auto=format&fit=crop",
       "problems": [
         {
           "id": "vidrio_templado",

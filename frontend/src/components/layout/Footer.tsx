@@ -11,15 +11,15 @@ export function Footer() {
   );
 
   return (
-    <footer className="relative mt-20 border-t border-white/[0.06] bg-white/[0.03]">
+    <footer className="relative mt-20 border-t border-white/[0.06] bg-black/[0.03]">
       <div className="mx-auto max-w-7xl px-5 py-12 lg:px-10">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
 
           {/* Brand col */}
           <div className="flex flex-col gap-4">
             <Link to="/" className="flex items-center gap-2.5 w-fit" onClick={() => window.scrollTo(0,0)}>
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-500/15 ring-1 ring-blue-500/40">
-                <Smartphone size={15} className="text-blue-500" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-500/15 ring-1 ring-amber-500/40">
+                <Smartphone size={15} className="text-amber-500" />
               </div>
               <span className="font-extrabold text-white">{BUSINESS_NAME}</span>
             </Link>
@@ -42,7 +42,7 @@ export function Footer() {
               </li>
               <li>
                 <a href="mailto:contacto@genmza.com.ar" className="flex items-center gap-2 hover:text-white transition-colors">
-                  <Mail size={16} className="text-blue-400" />
+                  <Mail size={16} className="text-amber-400" />
                   contacto@genmza.com.ar
                 </a>
               </li>

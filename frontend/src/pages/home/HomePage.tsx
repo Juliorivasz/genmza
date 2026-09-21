@@ -18,24 +18,27 @@ import {
 // ─────────────────────────────────────────────────────────────────────────────
 const SERVICES = [
   {
+    id: 'celulares',
     icon: Smartphone,
     title: 'Reparación de Celulares',
     description:
-      'Pantallas rotas, baterías agotadas, puertos de carga, cámaras y más. Trabajamos con todas las marcas: Samsung, iPhone, Motorola, Xiaomi y más.',
+      'Pantallas rotas, baterías agotadas, puertos de carga, cámaras y más. Trabajamos con todas las marcas: Samsung, iPhone, Motorola y Xiaomi.',
     image: 'https://images.unsplash.com/photo-1601972599720-36938d4ecd31?q=80&w=800&auto=format&fit=crop',
     items: ['Cambio de pantalla', 'Batería', 'Puerto de carga', 'Daño por agua'],
     color: 'blue',
   },
   {
+    id: 'computadoras',
     icon: Laptop,
     title: 'Reparación de PC y Notebook',
     description:
-      'Diagnóstico profesional de hardware y software. Formateos, instalación de OS, cambio de disco, reparación de pantallas y más.',
+      'Diagnóstico profesional de hardware y software. Reparación e instalación de componentes, instalación de sistemas operativos y más.',
     image: 'https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?q=80&w=800&auto=format&fit=crop',
     items: ['Formateo & OS', 'Disco / SSD', 'Pantalla rota', 'Virus & malware'],
     color: 'indigo',
   },
   {
+    id: 'protectores',
     icon: Shield,
     title: 'Protectores de Pantalla',
     description:
@@ -72,7 +75,7 @@ const WHY_US = [
   {
     icon: HeartHandshake,
     title: 'Atención personalizada',
-    desc: 'Trabajamos de forma independiente. Hablás directo con la persona que repara tu equipo.',
+    desc: 'Tu tranquilidad es nuestra prioridad. Reparamos tus dispositivos con un servicio exclusivo, certificado y 100% transparente.',
   },
   {
     icon: Star,
@@ -91,7 +94,7 @@ const WHY_US = [
 // ─────────────────────────────────────────────────────────────────────────────
 function SectionLabel({ children }: { children: string }) {
   return (
-    <p className="mb-3 text-xs font-bold uppercase tracking-widest text-blue-500">
+    <p className="mb-3 text-xs font-bold uppercase tracking-widest text-amber-500">
       {children}
     </p>
   );
@@ -131,9 +134,9 @@ export function HomePage() {
         <div className="relative mx-auto w-full max-w-7xl px-5 py-20 lg:px-10">
           <div className="max-w-2xl">
             {/* Badge */}
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-500" />
-              <span className="text-xs font-semibold text-blue-500">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-500" />
+              <span className="text-xs font-semibold text-amber-500">
                 Servicio técnico · Mendoza
               </span>
             </div>
@@ -142,7 +145,7 @@ export function HomePage() {
             <h1 className="mb-5 text-4xl font-black leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
               ¿Problemas con tu celular
               <br />
-              <span className="text-blue-500">o tu PC? Lo solucionamos.</span>
+              <span className="text-amber-500">o tu PC? Lo solucionamos.</span>
             </h1>
 
             <p className="mb-8 max-w-lg text-base leading-relaxed text-zinc-400 lg:text-lg">
@@ -153,7 +156,7 @@ export function HomePage() {
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
                 to="/presupuesto"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-500 px-7 py-4 text-base font-bold text-zinc-950 shadow-xl shadow-blue-500/30 transition-all duration-200 hover:bg-blue-400 hover:shadow-blue-500/50 active:scale-95"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-amber-500 px-7 py-4 text-base font-bold text-zinc-950 shadow-xl shadow-amber-500/30 transition-all duration-200 hover:bg-amber-400 hover:shadow-amber-500/50 active:scale-95"
               >
                 Pedir presupuesto gratis
                 <ArrowRight size={18} />
@@ -161,7 +164,7 @@ export function HomePage() {
               <button
                 type="button"
                 onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/8 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/12 active:scale-95"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-black/8 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:bg-black/12 active:scale-95"
               >
                 Ver servicios
                 <ChevronRight size={18} />
@@ -172,7 +175,7 @@ export function HomePage() {
             <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2">
               {['Opción Express 2-3hs', 'Garantía en repuestos', 'Presupuesto sin cargo'].map((t) => (
                 <div key={t} className="flex items-center gap-1.5 text-sm text-zinc-400">
-                  <CheckCircle2 size={14} className="text-blue-500 shrink-0" />
+                  <CheckCircle2 size={14} className="text-amber-500 shrink-0" />
                   {t}
                 </div>
               ))}
@@ -184,7 +187,7 @@ export function HomePage() {
       {/* ═══════════════════════════════════════════════════════════════════
           STATS BAR
       ════════════════════════════════════════════════════════════════════ */}
-      <section className="border-y border-white/[0.06] bg-white/[0.03]">
+      <section className="border-y border-white/[0.06] bg-black/[0.03]">
         <div className="mx-auto max-w-7xl px-5 py-8 lg:px-10">
           <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
             {STATS.map((s) => (
@@ -204,7 +207,7 @@ export function HomePage() {
         <div className="mb-12 text-center">
           <SectionLabel>Lo que hacemos</SectionLabel>
           <SectionTitle>
-            Nuestros <span className="text-blue-500">servicios</span>
+            Nuestros <span className="text-amber-500">servicios</span>
           </SectionTitle>
           <p className="mx-auto mt-4 max-w-xl text-sm text-zinc-500 lg:text-base">
             Trabajamos con todas las marcas y modelos. Diagnóstico profesional y repuestos de calidad.
@@ -215,12 +218,12 @@ export function HomePage() {
           {SERVICES.map((service) => {
             const Icon = service.icon;
             const accentMap: Record<string, string> = {
-              blue:    'text-blue-500 bg-blue-500/15 ring-blue-500/30',
+              blue:    'text-amber-500 bg-amber-500/15 ring-amber-500/30',
               indigo:  'text-indigo-400 bg-indigo-400/15 ring-indigo-400/30',
               emerald: 'text-emerald-400 bg-emerald-400/15 ring-emerald-400/30',
             };
             const borderMap: Record<string, string> = {
-              blue:    'group-hover:border-blue-500/40 group-hover:shadow-blue-500/10',
+              blue:    'group-hover:border-blue-500/40 group-hover:shadow-amber-500/10',
               indigo:  'group-hover:border-indigo-400/40 group-hover:shadow-indigo-400/10',
               emerald: 'group-hover:border-emerald-400/40 group-hover:shadow-emerald-400/10',
             };
@@ -230,7 +233,7 @@ export function HomePage() {
                 key={service.title}
                 className={[
                   'group relative flex flex-col overflow-hidden rounded-3xl',
-                  'border border-white/[0.10] bg-white/[0.06] backdrop-blur-md',
+                  'border border-white/[0.10] bg-black/[0.06] backdrop-blur-md',
                   'transition-all duration-300 hover:shadow-xl',
                   borderMap[service.color],
                 ].join(' ')}
@@ -260,7 +263,7 @@ export function HomePage() {
                     {service.items.map((item) => (
                       <span
                         key={item}
-                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-400"
+                        className="rounded-full border border-white/10 bg-black/5 px-3 py-1 text-xs text-zinc-400"
                       >
                         {item}
                       </span>
@@ -268,8 +271,8 @@ export function HomePage() {
                   </div>
 
                   <Link
-                    to="/presupuesto"
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-500 hover:text-blue-400 transition-colors"
+                    to={`/presupuesto?service=${service.id}`}
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-500 hover:text-amber-400 transition-colors"
                   >
                     Presupuestar ahora <ChevronRight size={14} />
                   </Link>
@@ -285,7 +288,7 @@ export function HomePage() {
       ════════════════════════════════════════════════════════════════════ */}
       <section
         id="nosotros"
-        className="border-y border-white/[0.06] bg-white/[0.02]"
+        className="border-y border-white/[0.06] bg-black/[0.02]"
       >
         <div className="mx-auto w-full max-w-7xl px-5 py-20 lg:px-10">
           <div className="mb-12 lg:flex lg:items-end lg:justify-between">
@@ -293,12 +296,12 @@ export function HomePage() {
               <SectionLabel>¿Por qué elegirnos?</SectionLabel>
               <SectionTitle>
                 Tu equipo en buenas{' '}
-                <span className="text-blue-500">manos</span>
+                <span className="text-amber-500">manos</span>
               </SectionTitle>
             </div>
             <Link
               to="/presupuesto"
-              className="mt-5 hidden lg:inline-flex items-center gap-2 rounded-2xl bg-blue-500 px-6 py-3 text-sm font-bold text-zinc-950 hover:bg-blue-400 transition-all active:scale-95"
+              className="mt-5 hidden lg:inline-flex items-center gap-2 rounded-2xl bg-amber-500 px-6 py-3 text-sm font-bold text-zinc-950 hover:bg-amber-400 transition-all active:scale-95"
             >
               Quiero mi presupuesto <ArrowRight size={16} />
             </Link>
@@ -310,10 +313,10 @@ export function HomePage() {
               return (
                 <div
                   key={item.title}
-                  className="flex gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.05] backdrop-blur-sm p-5 transition-all duration-200 hover:border-white/15 hover:bg-white/[0.08]"
+                  className="flex gap-4 rounded-2xl border border-white/[0.08] bg-black/[0.05] backdrop-blur-sm p-5 transition-all duration-200 hover:border-white/15 hover:bg-black/[0.08]"
                 >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-500/12 ring-1 ring-blue-500/25">
-                    <Icon size={18} className="text-blue-500" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/12 ring-1 ring-amber-500/25">
+                    <Icon size={18} className="text-amber-500" />
                   </div>
                   <div>
                     <p className="mb-1 text-sm font-bold text-white">{item.title}</p>
@@ -328,7 +331,7 @@ export function HomePage() {
           <div className="mt-8 lg:hidden">
             <Link
               to="/presupuesto"
-              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-500 py-4 text-base font-bold text-zinc-950 hover:bg-blue-400 transition-all active:scale-95"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-amber-500 py-4 text-base font-bold text-zinc-950 hover:bg-amber-400 transition-all active:scale-95"
             >
               Quiero mi presupuesto gratis <ArrowRight size={18} />
             </Link>
@@ -344,7 +347,7 @@ export function HomePage() {
         <div className="mb-10 text-center">
           <SectionLabel>Clientes</SectionLabel>
           <SectionTitle>
-            ¿Ya trabajamos juntos? <span className="text-blue-500">Contalo.</span>
+            ¿Te gustó nuestro servicio? <span className="text-amber-500">Contanos.</span>
           </SectionTitle>
           <p className="mx-auto mt-4 max-w-md text-sm text-zinc-500">
             Dejanos tu opinión por WhatsApp o Google y ayudás a otros a conocernos.
@@ -352,9 +355,9 @@ export function HomePage() {
         </div>
 
         {/* Placeholder card — reemplazar con comentarios reales cuando los haya */}
-        <div className="flex flex-col items-center justify-center gap-5 rounded-3xl border border-white/[0.08] bg-white/[0.04] px-8 py-16 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/12 ring-1 ring-blue-500/25">
-            <Star size={24} className="text-blue-500" />
+        <div className="flex flex-col items-center justify-center gap-5 rounded-3xl border border-white/[0.08] bg-black/[0.04] px-8 py-16 text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500/12 ring-1 ring-amber-500/25">
+            <Star size={24} className="text-amber-500" />
           </div>
           <div>
             <p className="text-base font-bold text-white">Las opiniones están en camino</p>
@@ -364,7 +367,7 @@ export function HomePage() {
           </div>
           <a
             href="#"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-zinc-300 hover:text-white hover:bg-white/10 transition-all"
+            className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-black/5 px-5 py-2.5 text-sm font-medium text-white hover:text-white hover:bg-black/10 transition-all"
           >
             Dejá tu opinión <ArrowRight size={14} />
           </a>
@@ -377,23 +380,23 @@ export function HomePage() {
       ════════════════════════════════════════════════════════════════════ */}
       <section
         id="ubicacion"
-        className="border-t border-white/[0.06] bg-white/[0.02]"
+        className="border-t border-white/[0.06] bg-black/[0.02]"
       >
         <div className="mx-auto w-full max-w-7xl px-5 py-20 lg:px-10">
           <div className="mb-12 text-center">
             <SectionLabel>Dónde estamos</SectionLabel>
             <SectionTitle>
               Operamos desde{' '}
-              <span className="text-blue-500">Mendoza</span>
+              <span className="text-amber-500">Mendoza</span>
             </SectionTitle>
             <p className="mx-auto mt-4 max-w-md text-sm text-zinc-500">
-              Trabajamos sin local físico — coordinamos todo por WhatsApp. Podemos acordar un punto de encuentro o retiro del equipo según el caso.
+              ¡Atención 100% personalizada por WhatsApp! Coordinamos contigo el diagnóstico de tus equipos y te damos soluciones inmediatas sin salir de casa.
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_340px]">
             {/* Google Maps embed */}
-            <div className="overflow-hidden rounded-3xl border border-white/[0.10] bg-white/[0.04]">
+            <div className="overflow-hidden rounded-3xl border border-white/[0.10] bg-black/[0.04]">
               {/*
                 ⚠️  REEMPLAZÁ el src del iframe con tu dirección real.
                 Para generar el embed: https://maps.google.com → compartir → insertar mapa
@@ -413,10 +416,10 @@ export function HomePage() {
             {/* Info panel */}
             <div className="flex flex-col gap-4">
               {/* Address */}
-              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.05] p-5">
+              <div className="rounded-2xl border border-white/[0.08] bg-black/[0.05] p-5">
                 <div className="flex items-start gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-500/12 ring-1 ring-blue-500/25">
-                    <MapPin size={16} className="text-blue-500" />
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500/12 ring-1 ring-amber-500/25">
+                    <MapPin size={16} className="text-amber-500" />
                   </div>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-wider text-zinc-600 mb-1">Zona de cobertura</p>
@@ -429,10 +432,10 @@ export function HomePage() {
               </div>
 
               {/* Hours */}
-              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.05] p-5">
+              <div className="rounded-2xl border border-white/[0.08] bg-black/[0.05] p-5">
                 <div className="flex items-start gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-500/12 ring-1 ring-blue-500/25">
-                    <Clock size={16} className="text-blue-500" />
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500/12 ring-1 ring-amber-500/25">
+                    <Clock size={16} className="text-amber-500" />
                   </div>
                   <div className="flex-1">
                     <p className="text-xs font-bold uppercase tracking-wider text-zinc-600 mb-2">Horario de atención</p>
@@ -453,7 +456,7 @@ export function HomePage() {
               {/* CTA banner */}
               <Link
                 to="/presupuesto"
-                className="flex items-center justify-between rounded-2xl bg-blue-500 px-5 py-4 hover:bg-blue-400 transition-all active:scale-95"
+                className="flex items-center justify-between rounded-2xl bg-amber-500 px-5 py-4 hover:bg-amber-400 transition-all active:scale-95"
               >
                 <div>
                   <p className="text-sm font-bold text-zinc-950">¿Tenés dudas?</p>
@@ -470,22 +473,22 @@ export function HomePage() {
           BOTTOM CTA BAND
       ════════════════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 to-indigo-600/10" />
+        <div className="absolute inset-0" />
         <div className="relative mx-auto w-full max-w-7xl px-5 py-20 text-center lg:px-10">
-          <p className="mb-2 text-xs font-bold uppercase tracking-widest text-blue-500">
+          <p className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-500">
             Empezá ahora
           </p>
           <h2 className="mb-5 text-3xl font-extrabold text-white lg:text-5xl">
             ¿Tu equipo tiene algún problema?
             <br />
-            <span className="text-blue-500">Resolvámoslo hoy.</span>
+            <span className="text-amber-500">Resolvámoslo hoy.</span>
           </h2>
           <p className="mx-auto mb-8 max-w-md text-sm text-zinc-400 lg:text-base">
             Completá el formulario de presupuesto y te respondemos por WhatsApp en menos de 1 hora. Sin costo, sin compromiso.
           </p>
           <Link
             to="/presupuesto"
-            className="inline-flex items-center gap-2 rounded-2xl bg-blue-500 px-8 py-4 text-base font-bold text-zinc-950 shadow-xl shadow-blue-500/30 transition-all hover:bg-blue-400 hover:shadow-blue-500/50 active:scale-95"
+            className="inline-flex items-center gap-2 rounded-2xl bg-amber-500 px-8 py-4 text-base font-bold text-zinc-950 shadow-xl shadow-amber-500/30 transition-all hover:bg-amber-400 hover:shadow-amber-500/50 active:scale-95"
           >
             Obtener presupuesto gratis
             <ArrowRight size={18} />

@@ -1,5 +1,57 @@
-import { Clock } from 'lucide-react';
+import {
+  Monitor,
+  BatteryLow,
+  Camera,
+  Zap,
+  Volume2,
+  Power,
+  Droplets,
+  HelpCircle,
+  Gauge,
+  Bug,
+  Keyboard,
+  HardDrive,
+  RefreshCw,
+  Flame,
+  Shield,
+  EyeOff,
+  Layers,
+  Square,
+  Clock,
+  type LucideIcon,
+} from 'lucide-react';
 import type { Problem } from '../../types';
+
+// ── Icon map by problem id ───────────────────────────────────────────────────
+const PROBLEM_ICONS: Record<string, LucideIcon> = {
+  // Celulares
+  pantalla_rota:     Monitor,
+  bateria_agotada:   BatteryLow,
+  camara_dañada:     Camera,
+  puerto_carga:      Zap,
+  microfono_altavoz: Volume2,
+  boton_home:        Square,
+  no_enciende:       Power,
+  agua:              Droplets,
+  otro_cel:          HelpCircle,
+  // Computadoras
+  no_enciende_pc:    Power,
+  lenta_pc:          Gauge,
+  virus_malware:     Bug,
+  pantalla_rota_pc:  Monitor,
+  teclado_touchpad:  Keyboard,
+  bateria_notebook:  BatteryLow,
+  disco_duro:        HardDrive,
+  sistema_operativo: RefreshCw,
+  sobrecalentamiento: Flame,
+  otro_pc:           HelpCircle,
+  // Protectores
+  vidrio_templado:   Shield,
+  vidrio_privacidad: EyeOff,
+  lamina_hidrogel:   Layers,
+  lamina_mate:       Monitor,
+  camara_protector:  Camera,
+};
 
 interface ProblemListProps {
   problems: Problem[];
@@ -8,16 +60,14 @@ interface ProblemListProps {
 }
 
 /**
- * Renders problems as a scrollable pill-button list.
- * Animates in with a CSS transition using the `animate-in` pattern.
+ * Two-column chip grid with icon + label + optional time.
+ * Auto-advances parent wizard on selection.
  */
 export function ProblemList({ problems, selectedId, onSelect }: ProblemListProps) {
   return (
-    <div
-      className="flex flex-col gap-2"
-      style={{ animation: 'slideDown 0.25s ease-out' }}
-    >
+    <div className="grid grid-cols-2 gap-2.5">
       {problems.map((problem) => {
+        const Icon = PROBLEM_ICONS[problem.id] ?? HelpCircle;
         const isSelected = selectedId === problem.id;
 
         return (
@@ -26,23 +76,34 @@ export function ProblemList({ problems, selectedId, onSelect }: ProblemListProps
             type="button"
             onClick={() => onSelect(problem.id)}
             className={[
-              'flex items-center justify-between w-full rounded-xl px-4 py-3.5',
-              'border text-left transition-all duration-200 active:scale-[0.98]',
+              'flex flex-col items-start gap-2 rounded-2xl p-4 text-left',
+              'min-h-[90px] transition-all duration-200 active:scale-[0.97]',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
               isSelected
-                ? 'bg-blue-500/10 border-blue-500/60 text-white shadow-sm shadow-blue-500/10'
-                : 'bg-white/5 border-white/10 text-zinc-300 hover:border-white/20 hover:text-white',
+                ? 'bg-amber-500/15 ring-2 ring-blue-500 text-white shadow-md shadow-amber-500/15'
+                : 'bg-black/[0.05] ring-1 ring-white/10 text-white hover:ring-white/25 hover:text-white',
             ].join(' ')}
           >
-            <span className="text-sm font-medium">{problem.label}</span>
+            {/* Icon */}
+            <Icon
+              size={18}
+              className={isSelected ? 'text-amber-400' : 'text-zinc-500'}
+            />
 
+            {/* Label */}
+            <span className="text-sm font-medium leading-snug flex-1">
+              {problem.label}
+            </span>
+
+            {/* Estimated time */}
             {problem.estimatedTime && (
               <span
                 className={[
-                  'flex items-center gap-1 shrink-0 ml-3 text-xs',
-                  isSelected ? 'text-blue-500' : 'text-zinc-600',
+                  'flex items-center gap-1 text-[11px] font-medium',
+                  isSelected ? 'text-amber-400' : 'text-zinc-600',
                 ].join(' ')}
               >
-                <Clock size={11} />
+                <Clock size={10} />
                 {problem.estimatedTime}
               </span>
             )}

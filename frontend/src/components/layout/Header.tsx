@@ -9,8 +9,8 @@ export function Header() {
 
           {/* ── Brand ── */}
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500/10 ring-1 ring-blue-500/30">
-              <Zap size={17} className="text-blue-500" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500/10 ring-1 ring-amber-500/30">
+              <Zap size={17} className="text-amber-500" />
             </div>
             <div>
               <span className="text-base font-extrabold tracking-tight text-white">
@@ -25,11 +25,11 @@ export function Header() {
           {/* ── Trust signals — only desktop ── */}
           <div className="hidden lg:flex items-center gap-6">
             <div className="flex items-center gap-1.5 text-xs text-zinc-500">
-              <Clock size={13} className="text-blue-500/70" />
+              <Clock size={13} className="text-amber-500/70" />
               <span>Lun–Sáb 9:00–20:00</span>
             </div>
             <div className="flex items-center gap-1.5 text-xs text-zinc-500">
-              <MapPin size={13} className="text-blue-500/70" />
+              <MapPin size={13} className="text-amber-500/70" />
               <span>Buenos Aires, Argentina</span>
             </div>
             <div className="flex items-center gap-1 text-xs text-amber-400">

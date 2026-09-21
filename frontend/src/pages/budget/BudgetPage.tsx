@@ -1,90 +1,171 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Smartphone, Wrench, Cpu } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import {
+  ChevronLeft,
+  MessageCircle,
+  ChevronRight,
+  CheckCircle2,
+  Wrench,
+  Cpu,
+  Smartphone,
+} from 'lucide-react';
 
 import db from '../../data/db.json';
 import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
 import { ServiceGrid } from './ServiceGrid';
 import { ProblemList } from './ProblemList';
-import { StickyCta } from './StickyCta';
 import { SummaryPanel } from './SummaryPanel';
 import { useWhatsAppRedirect } from '../../hooks/useWhatsAppRedirect';
 import type { BudgetFormValues, Service } from '../../types';
 
-// ── Step indicator data ──────────────────────────────────────────────────────
-const STEPS = [
-  { id: 1, label: 'Servicio', icon: Wrench },
-  { id: 2, label: 'Problema', icon: Cpu },
-  { id: 3, label: 'Modelo', icon: Smartphone },
+// ── Types ────────────────────────────────────────────────────────────────────
+type MobileStep = 1 | 2 | 3;
+
+// ── Brand options ─────────────────────────────────────────────────────────────
+const BRANDS_COMPUTADORAS = [
+  { value: 'HP', label: 'HP' },
+  { value: 'Lenovo', label: 'Lenovo' },
+  { value: 'Dell', label: 'Dell' },
+  { value: 'Asus', label: 'Asus' },
+  { value: 'Apple', label: 'Apple (Mac)' },
+  { value: 'Acer', label: 'Acer' },
+  { value: 'Otra', label: 'Otra marca' },
+];
+const BRANDS_DEFAULT = [
+  { value: 'Samsung', label: 'Samsung' },
+  { value: 'Apple', label: 'Apple (iPhone)' },
+  { value: 'Motorola', label: 'Motorola' },
+  { value: 'Xiaomi', label: 'Xiaomi' },
+  { value: 'Otra', label: 'Otra marca' },
 ];
 
-function StepIndicator({ current }: { current: number }) {
+// ── Step metadata ─────────────────────────────────────────────────────────────
+const STEPS = [
+  { id: 1 as MobileStep, label: 'Servicio',  icon: Wrench },
+  { id: 2 as MobileStep, label: 'Problema',  icon: Cpu },
+  { id: 3 as MobileStep, label: 'Equipo',    icon: Smartphone },
+];
+
+// ── Validation helper ─────────────────────────────────────────────────────────
+function validateModel(val: string): true | string {
+  const v = val.trim().toLowerCase();
+  if (v.length < 2) return 'Ingresá al menos 2 caracteres';
+  if (v === 'no lo se' || v === 'no lo sé' || v === 'ni idea') return true;
+  if (!/[a-z0-9]/.test(v)) return 'Ingresá un modelo válido';
+  if (/[^a-z0-9\s\-.+/]/.test(v)) return 'Evitá usar símbolos especiales';
+  if (/(.)\1{3,}/.test(v)) return 'Parece que escribiste algo incorrecto';
+  return true;
+}
+
+// ── Mobile progress bar ───────────────────────────────────────────────────────
+function MobileProgress({ step }: { step: MobileStep }) {
+  const labels: Record<MobileStep, string> = {
+    1: 'Elegí el servicio',
+    2: '¿Cuál es el problema?',
+    3: 'Datos del equipo',
+  };
   return (
-    <div className="flex items-center justify-center gap-0 mb-8">
-      {STEPS.map((step, idx) => {
-        const Icon = step.icon;
-        const done = current > step.id;
-        const active = current === step.id;
+    <div className="mb-6">
+      <div className="flex items-center justify-between mb-2.5">
+        <span className="text-[11px] font-bold uppercase tracking-widest text-amber-500">
+          Paso {step} de 3
+        </span>
+        <span className="text-[11px] text-zinc-500">{labels[step]}</span>
+      </div>
+      <div className="flex gap-1.5">
+        {STEPS.map((s) => (
+          <div
+            key={s.id}
+            className={[
+              'h-1 flex-1 rounded-full transition-all duration-500',
+              s.id <= step ? 'bg-amber-500' : 'bg-black/10',
+            ].join(' ')}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
-        return (
-          <div key={step.id} className="flex items-center">
-            <div className="flex flex-col items-center gap-1">
-              <div
-                className={[
-                  'flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all duration-300',
-                  done
-                    ? 'bg-blue-500 border-blue-500 text-zinc-950'
-                    : active
-                      ? 'bg-blue-500/10 border-blue-500 text-blue-500'
-                      : 'bg-white/5 border-white/10 text-zinc-600',
-                ].join(' ')}
-              >
-                <Icon size={15} />
-              </div>
-              <span
-                className={[
-                  'text-[10px] font-medium',
-                  active ? 'text-blue-500' : done ? 'text-zinc-300' : 'text-zinc-600',
-                ].join(' ')}
-              >
-                {step.label}
-              </span>
-            </div>
+// ── Desktop step header ───────────────────────────────────────────────────────
+function DesktopStepHeader({
+  step,
+  label,
+  done,
+}: {
+  step: number;
+  label: string;
+  done?: boolean;
+}) {
+  return (
+    <div className="mb-4 flex items-center gap-3">
+      <div
+        className={[
+          'flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold shrink-0 transition-colors duration-300',
+          done
+            ? 'bg-amber-500 text-zinc-950'
+            : 'bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/40',
+        ].join(' ')}
+      >
+        {done ? <CheckCircle2 size={14} /> : step}
+      </div>
+      <h2 className="text-base font-semibold text-zinc-200">{label}</h2>
+    </div>
+  );
+}
 
-            {/* Connector line */}
-            {idx < STEPS.length - 1 && (
-              <div
-                className={[
-                  'h-px w-12 mx-2 mb-4 transition-colors duration-500',
-                  done ? 'bg-blue-500/60' : 'bg-white/10',
-                ].join(' ')}
-              />
-            )}
+// ── WhatsApp submit button ────────────────────────────────────────────────────
+function WhatsAppButton({
+  onClick,
+  ready,
+  type = 'button',
+}: {
+  onClick?: () => void;
+  ready: boolean;
+  type?: 'button' | 'submit';
+}) {
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={!ready}
+      className={[
+        'w-full flex items-center justify-between',
+        'rounded-2xl px-6 py-4 text-base font-bold',
+        'transition-all duration-300 active:scale-[0.98]',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950',
+        'disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100',
+        ready
+          ? 'bg-emerald-500 text-white shadow-xl shadow-emerald-500/30 hover:bg-emerald-400 focus-visible:ring-emerald-400'
+          : 'bg-black/8 border border-white/10 text-zinc-500',
+      ].join(' ')}
+    >
+      <div className="flex items-center gap-3">
+        <MessageCircle size={22} className={ready ? 'text-white' : 'text-zinc-600'} />
+        <div className="text-left">
+          <div className="font-bold leading-none">Consultar por WhatsApp</div>
+          <div
+            className={[
+              'mt-1 text-xs font-normal leading-none',
+              ready ? 'text-emerald-100' : 'text-zinc-600',
+            ].join(' ')}
+          >
+            {ready ? '¡Todo listo! Enviá tu consulta' : 'Completá marca y modelo para continuar'}
           </div>
-        );
-      })}
-    </div>
+        </div>
+      </div>
+      <ChevronRight size={20} className={ready ? 'text-white' : 'text-zinc-600'} />
+    </button>
   );
 }
 
-// ── Section header helper ────────────────────────────────────────────────────
-function SectionHeader({ step, title }: { step: number; title: string }) {
-  return (
-    <div className="mb-3 flex items-center gap-2">
-      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-500 text-[10px] font-bold text-zinc-950">
-        {step}
-      </span>
-      <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">
-        {title}
-      </h2>
-    </div>
-  );
-}
-
-// ── Main page component ──────────────────────────────────────────────────────
+// ── Main page ─────────────────────────────────────────────────────────────────
 export function BudgetPage() {
+  const [searchParams] = useSearchParams();
   const { redirect } = useWhatsAppRedirect();
+  const [mobileStep, setMobileStep] = useState<MobileStep>(1);
 
   const {
     control,
@@ -102,39 +183,47 @@ export function BudgetPage() {
   const deviceBrand = watch('deviceBrand');
   const deviceModel = watch('deviceModel');
 
-  // Reset problem when service changes
+  // Pre-select service from ?service= URL param on first mount
+  useEffect(() => {
+    const svc = searchParams.get('service');
+    if (svc && ['celulares', 'computadoras', 'protectores'].includes(svc)) {
+      setValue('serviceId', svc as BudgetFormValues['serviceId']);
+      setMobileStep(2);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Reset downstream fields when service changes
   useEffect(() => {
     setValue('problemId', '');
     setValue('deviceBrand', '');
     setValue('deviceModel', '');
   }, [serviceId, setValue]);
 
-  const selectedService: Service | undefined = (db.services as Service[]).find(
-    (s) => s.id === serviceId,
-  );
+  // Auto-advance mobile: step 1 → 2 when a service is selected by the user
+  useEffect(() => {
+    if (serviceId && mobileStep === 1) {
+      const t = setTimeout(() => setMobileStep(2), 180);
+      return () => clearTimeout(t);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [serviceId]);
 
-  const selectedProblem = selectedService?.problems.find((p) => p.id === problemId);
+  // Auto-advance mobile: step 2 → 3 when a problem is selected
+  useEffect(() => {
+    if (problemId && mobileStep === 2) {
+      const t = setTimeout(() => setMobileStep(3), 180);
+      return () => clearTimeout(t);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [problemId]);
 
-  const brandOptions = serviceId === 'computadoras'
-    ? [
-        { value: 'HP', label: 'HP' },
-        { value: 'Lenovo', label: 'Lenovo' },
-        { value: 'Dell', label: 'Dell' },
-        { value: 'Asus', label: 'Asus' },
-        { value: 'Apple', label: 'Apple (Mac)' },
-        { value: 'Acer', label: 'Acer' },
-        { value: 'Otra', label: 'Otra marca' },
-      ]
-    : [
-        { value: 'Samsung', label: 'Samsung' },
-        { value: 'Apple', label: 'Apple (iPhone)' },
-        { value: 'Motorola', label: 'Motorola' },
-        { value: 'Xiaomi', label: 'Xiaomi' },
-        { value: 'Otra', label: 'Otra marca' },
-      ];
+  const selectedService = (db.services as Service[]).find((s) => s.id === serviceId);
+  const selectedProblem  = selectedService?.problems.find((p) => p.id === problemId);
+  const brandOptions     = serviceId === 'computadoras' ? BRANDS_COMPUTADORAS : BRANDS_DEFAULT;
+  const isReady          = Boolean(serviceId && problemId && deviceBrand && deviceModel.trim());
 
-  const currentStep = !serviceId ? 1 : !problemId ? 2 : 3;
-  const isReady = Boolean(serviceId && problemId && deviceBrand && deviceModel.trim());
+  const goBack = () => setMobileStep((s) => (Math.max(1, s - 1) as MobileStep));
 
   function onSubmit(data: BudgetFormValues) {
     const service = (db.services as Service[]).find((s) => s.id === data.serviceId);
@@ -143,50 +232,42 @@ export function BudgetPage() {
     redirect(data, problem.label, service.title);
   }
 
+  // ── Render ──────────────────────────────────────────────────────────────────
   return (
-    /* Page-level container with responsive padding */
-    <div className="mx-auto w-full max-w-7xl px-4 pb-40 pt-8 lg:px-10 lg:pb-16 lg:pt-10">
-      {/*
-       * Mobile:   single column
-       * Desktop:  2-column grid — 3fr form | 2fr summary sidebar
-       */}
-      <div className="lg:grid lg:grid-cols-[1fr_380px] lg:gap-12 xl:gap-16">
+    <div className="mx-auto w-full max-w-7xl px-4 pb-10 pt-8 lg:px-10 lg:pb-16 lg:pt-10">
 
+      {/* ══════════════════════════════════════════════════════════════════════
+          MOBILE LAYOUT  (hidden on lg+)
+      ══════════════════════════════════════════════════════════════════════ */}
+      <div className="lg:hidden pb-8">
+        <MobileProgress step={mobileStep} />
 
-      {/* ══════════════════════════════════════════
-          LEFT COLUMN — Form
-      ══════════════════════════════════════════ */}
-      <div className="min-w-0">
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        {/* Back button */}
+        {mobileStep > 1 && (
+          <button
+            type="button"
+            onClick={goBack}
+            className="mb-5 flex items-center gap-1.5 text-sm text-zinc-400 hover:text-white transition-colors"
+          >
+            <ChevronLeft size={16} />
+            Atrás
+          </button>
+        )}
 
-          {/* ── Hero heading ── */}
-          <div className="mb-8 lg:mb-10 lg:text-left text-center">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-blue-500">
-              Servicio técnico rápido
-            </p>
-            <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-white lg:text-5xl">
+        {/* ── Step 1: Elegí el servicio ── */}
+        {mobileStep === 1 && (
+          <div style={{ animation: 'slideDown 0.25s ease-out' }}>
+            <h1 className="mb-2 text-2xl font-extrabold leading-tight text-white">
               ¿Qué necesitás{' '}
-              <span className="text-blue-500">reparar hoy?</span>
+              <span className="text-amber-500">reparar?</span>
             </h1>
-            <p className="mt-3 text-sm text-zinc-500 lg:text-base">
-              Seleccioná el servicio, describí el problema y recibí tu presupuesto por WhatsApp al instante.
+            <p className="mb-6 text-sm text-zinc-500">
+              Tocá el servicio y avanzamos al siguiente paso.
             </p>
-          </div>
-
-          {/* ── Step progress ── */}
-          <div className="lg:justify-start">
-            <StepIndicator current={currentStep} />
-          </div>
-
-          {/* ─────────────────────────────────────────
-              STEP 1 — Service
-          ───────────────────────────────────────── */}
-          <section className="mb-6 lg:mb-8">
-            <SectionHeader step={1} title="Elegí el servicio" />
             <Controller
               name="serviceId"
               control={control}
-              rules={{ required: 'Seleccioná un servicio' }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <ServiceGrid
                   services={db.services as Service[]}
@@ -195,142 +276,227 @@ export function BudgetPage() {
                 />
               )}
             />
-            {errors.serviceId && (
-              <p className="mt-2 text-xs text-red-400 pl-1">{errors.serviceId.message}</p>
-            )}
-          </section>
+          </div>
+        )}
 
-          {/* ─────────────────────────────────────────
-              STEP 2 — Problem (progressive disclosure)
-          ───────────────────────────────────────── */}
-          {selectedService && (
-            <section
-              className="mb-6 lg:mb-8"
-              style={{ animation: 'slideDown 0.3s ease-out' }}
-            >
-              <SectionHeader step={2} title="¿Cuál es el problema?" />
+        {/* ── Step 2: Elegí el problema ── */}
+        {mobileStep === 2 && selectedService && (
+          <div style={{ animation: 'slideDown 0.25s ease-out' }}>
+            {/* Mini service badge */}
+            <div className="mb-5 flex items-center gap-3 rounded-2xl border border-blue-500/25 bg-amber-500/8 px-4 py-3">
+              {selectedService.image && (
+                <img
+                  src={selectedService.image}
+                  alt={selectedService.title}
+                  className="h-10 w-10 rounded-xl object-cover shrink-0"
+                />
+              )}
+              <div className="min-w-0 flex-1">
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                  Seleccionaste
+                </p>
+                <p className="text-sm font-bold text-white truncate">{selectedService.title}</p>
+              </div>
+              <CheckCircle2 size={16} className="text-amber-500 shrink-0" />
+            </div>
+
+            <h2 className="mb-2 text-xl font-bold text-white">¿Cuál es el problema?</h2>
+            <p className="mb-5 text-sm text-zinc-500">Tocá el problema y avanzamos.</p>
+
+            <Controller
+              name="problemId"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <ProblemList
+                  problems={selectedService.problems}
+                  selectedId={field.value}
+                  onSelect={(id) => field.onChange(id)}
+                />
+              )}
+            />
+          </div>
+        )}
+
+        {/* ── Step 3: Datos del equipo ── */}
+        {mobileStep === 3 && (
+          <div style={{ animation: 'slideDown 0.25s ease-out' }}>
+            {/* Mini summary */}
+            <div className="mb-6 rounded-2xl border border-white/10 bg-black/[0.04] px-4 py-4 space-y-2.5">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-600 mb-1">
+                Tu consulta hasta ahora
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-zinc-500">Servicio</span>
+                <span className="text-xs font-semibold text-white">{selectedService?.title}</span>
+              </div>
+              <div className="border-t border-white/[0.06]" />
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-zinc-500">Problema</span>
+                <span className="text-xs font-semibold text-white max-w-[60%] text-right leading-snug">
+                  {selectedProblem?.label}
+                </span>
+              </div>
+              {selectedProblem?.estimatedTime && (
+                <>
+                  <div className="border-t border-white/[0.06]" />
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-zinc-500">Tiempo estimado</span>
+                    <span className="text-xs font-semibold text-amber-400">
+                      {selectedProblem.estimatedTime}
+                    </span>
+                  </div>
+                </>
+              )}
+            </div>
+
+            <h2 className="mb-5 text-xl font-bold text-white">¿De qué equipo se trata?</h2>
+
+            <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
+              <Select
+                label="Marca"
+                placeholder="Elegí la marca..."
+                error={errors.deviceBrand?.message}
+                options={brandOptions}
+                {...register('deviceBrand', { required: 'Elegí una marca' })}
+              />
+              <Input
+                label="Modelo exacto"
+                placeholder="Ej: Galaxy A54, iPhone 13, IdeaPad 3..."
+                hint="Si no lo sabés exacto, escribí 'No lo sé'."
+                error={errors.deviceModel?.message}
+                autoComplete="off"
+                {...register('deviceModel', {
+                  required: 'Ingresá el modelo (o "No lo sé")',
+                  validate: validateModel,
+                })}
+              />
+
+              {/* WhatsApp button */}
+              <div className="mt-2">
+                <WhatsAppButton type="submit" ready={isReady} />
+              </div>
+            </form>
+          </div>
+        )}
+      </div>
+
+      {/* ══════════════════════════════════════════════════════════════════════
+          DESKTOP LAYOUT  (hidden on mobile)
+      ══════════════════════════════════════════════════════════════════════ */}
+      <div className="hidden lg:grid lg:grid-cols-[1fr_380px] lg:gap-12 xl:gap-16">
+
+        {/* ── Left column: Form ── */}
+        <div className="min-w-0">
+          {/* Page heading */}
+          <div className="mb-10">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-amber-500">
+              Servicio técnico — Mendoza
+            </p>
+            <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-white xl:text-5xl">
+              ¿Qué necesitás{' '}
+              <span className="text-amber-500">reparar hoy?</span>
+            </h1>
+            <p className="mt-3 text-sm text-zinc-500">
+              Elegí el servicio, describí el problema y recibí tu presupuesto por WhatsApp — sin costo ni compromiso.
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
+
+            {/* Step 1 */}
+            <section className="mb-10">
+              <DesktopStepHeader step={1} label="Elegí el servicio" done={!!serviceId} />
               <Controller
-                name="problemId"
+                name="serviceId"
                 control={control}
-                rules={{ required: 'Seleccioná el problema' }}
+                rules={{ required: 'Seleccioná un servicio' }}
                 render={({ field }) => (
-                  <ProblemList
-                    problems={selectedService.problems}
+                  <ServiceGrid
+                    services={db.services as Service[]}
                     selectedId={field.value}
                     onSelect={(id) => field.onChange(id)}
                   />
                 )}
               />
-              {errors.problemId && (
-                <p className="mt-2 text-xs text-red-400 pl-1">{errors.problemId.message}</p>
+              {errors.serviceId && (
+                <p className="mt-2 text-xs text-red-400 pl-1">{errors.serviceId.message}</p>
               )}
             </section>
-          )}
 
-          {/* ─────────────────────────────────────────
-              STEP 3 — Device model (progressive disclosure)
-          ───────────────────────────────────────── */}
-          {selectedService && problemId && (
-            <section
-              className="mb-6 lg:mb-8"
-              style={{ animation: 'slideDown 0.3s ease-out' }}
-            >
-              <SectionHeader step={3} title="Datos del equipo" />
-              <div className="flex flex-col gap-4 sm:flex-row">
-                <div className="flex-1">
-                  <Select
-                    label="Marca"
-                    placeholder="Elegí la marca..."
-                    error={errors.deviceBrand?.message}
-                    options={brandOptions}
-                    {...register('deviceBrand', {
-                      required: 'Elegí una marca',
-                    })}
-                  />
+            {/* Step 2 — progressive disclosure */}
+            {selectedService && (
+              <section
+                className="mb-10"
+                style={{ animation: 'slideDown 0.3s ease-out' }}
+              >
+                <DesktopStepHeader step={2} label="¿Cuál es el problema?" done={!!problemId} />
+                <Controller
+                  name="problemId"
+                  control={control}
+                  rules={{ required: 'Seleccioná el problema' }}
+                  render={({ field }) => (
+                    <ProblemList
+                      problems={selectedService.problems}
+                      selectedId={field.value}
+                      onSelect={(id) => field.onChange(id)}
+                    />
+                  )}
+                />
+                {errors.problemId && (
+                  <p className="mt-2 text-xs text-red-400 pl-1">{errors.problemId.message}</p>
+                )}
+              </section>
+            )}
+
+            {/* Step 3 — progressive disclosure */}
+            {selectedService && problemId && (
+              <section
+                className="mb-10"
+                style={{ animation: 'slideDown 0.3s ease-out' }}
+              >
+                <DesktopStepHeader step={3} label="Datos del equipo" done={isReady} />
+                <div className="flex flex-col gap-4 sm:flex-row">
+                  <div className="flex-1">
+                    <Select
+                      label="Marca"
+                      placeholder="Elegí la marca..."
+                      error={errors.deviceBrand?.message}
+                      options={brandOptions}
+                      {...register('deviceBrand', { required: 'Elegí una marca' })}
+                    />
+                  </div>
+                  <div className="flex-[2]">
+                    <Input
+                      label="Modelo exacto"
+                      placeholder="Ej: Galaxy A54, iPhone 13, IdeaPad 3..."
+                      hint="Si no lo sabés exacto, escribí 'No lo sé'."
+                      error={errors.deviceModel?.message}
+                      autoComplete="off"
+                      {...register('deviceModel', {
+                        required: 'Ingresá el modelo (o "No lo sé")',
+                        validate: validateModel,
+                      })}
+                    />
+                  </div>
                 </div>
-                <div className="flex-[2]">
-                  <Input
-                    label="Modelo exacto"
-                    placeholder="Ej: Galaxy A54, iPhone 13, IdeaPad 3..."
-                    hint="Si no lo sabés, escribí 'No lo sé'."
-                    error={errors.deviceModel?.message}
-                    autoComplete="off"
-                    {...register('deviceModel', {
-                      required: 'Ingresá el modelo (o "No lo sé")',
-                      validate: (val) => {
-                        const v = val.trim().toLowerCase();
-                        if (v.length < 2) return 'Ingresá al menos 2 caracteres';
-                        if (v === 'no lo se' || v === 'no lo sé' || v === 'ni idea') return true;
-                        
-                        // Debe tener al menos una letra o un número
-                        if (!/[a-z0-9]/.test(v)) return 'Ingresá un modelo válido';
-                        
-                        // Evitar símbolos raros (permitimos alfanuméricos, espacios, guiones, puntos, más, barra)
-                        if (/[^a-z0-9\s\-\.\+\/]/.test(v)) return 'Evitá usar símbolos especiales';
-                        
-                        // Evitar repeticiones excesivas (ej: "aaaaa" o "11111")
-                        if (/(.)\1{3,}/.test(v)) return 'Parece que escribiste algo incorrecto';
-                        
-                        return true;
-                      }
-                    })}
-                  />
-                </div>
-              </div>
-            </section>
-          )}
+              </section>
+            )}
 
-          {/* ─────────────────────────────────────────
-              Summary card — MOBILE ONLY (lg:hidden)
-              Desktop uses SummaryPanel in the sidebar
-          ───────────────────────────────────────── */}
-          {isReady && (
-            <div
-              className="mb-4 rounded-2xl border border-blue-500/20 bg-blue-500/5 px-5 py-4 lg:hidden"
-              style={{ animation: 'slideDown 0.3s ease-out' }}
-            >
-              <p className="text-xs font-semibold uppercase tracking-wider text-blue-500 mb-2">
-                Tu consulta lista ✓
-              </p>
-              <div className="space-y-1">
-                <p className="text-sm text-zinc-300">
-                  <span className="text-zinc-500">Servicio: </span>
-                  {selectedService?.title}
-                </p>
-                <p className="text-sm text-zinc-300">
-                  <span className="text-zinc-500">Problema: </span>
-                  {selectedProblem?.label}
-                </p>
-                <p className="text-sm text-zinc-300">
-                  <span className="text-zinc-500">Equipo: </span>
-                  {deviceBrand} {deviceModel}
-                </p>
-              </div>
-            </div>
-          )}
-        </form>
+          </form>
+        </div>
 
-        {/* Mobile sticky CTA */}
-        <StickyCta
-          onClick={handleSubmit(onSubmit)}
-          ready={isReady}
+        {/* ── Right column: Summary ── */}
+        <SummaryPanel
+          selectedService={selectedService}
+          problemLabel={selectedProblem?.label}
+          problemTime={selectedProblem?.estimatedTime}
+          deviceBrand={deviceBrand}
+          deviceModel={deviceModel}
+          isReady={isReady}
+          onSubmit={handleSubmit(onSubmit)}
         />
       </div>
-
-      {/* ══════════════════════════════════════════
-          RIGHT COLUMN — Desktop summary sidebar
-          (SummaryPanel itself is hidden on mobile)
-      ══════════════════════════════════════════ */}
-      <SummaryPanel
-        selectedService={selectedService}
-        problemLabel={selectedProblem?.label}
-        problemTime={selectedProblem?.estimatedTime}
-        deviceBrand={deviceBrand}
-        deviceModel={deviceModel}
-        isReady={isReady}
-        onSubmit={handleSubmit(onSubmit)}
-      />
-    </div>
     </div>
   );
 }

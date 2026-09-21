@@ -12,7 +12,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="flex flex-col gap-1.5 w-full">
         {label && (
-          <label className="text-sm font-medium text-zinc-300 pl-1">
+          <label className="text-sm font-medium text-white pl-1">
             {label}
           </label>
         )}
@@ -26,7 +26,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             className={[
               'w-full rounded-2xl px-4 py-3.5 text-base text-white placeholder-zinc-500',
-              'bg-white/5 backdrop-blur-sm border',
+              'bg-black/5 backdrop-blur-sm border',
               'transition-all duration-200',
               'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
               error

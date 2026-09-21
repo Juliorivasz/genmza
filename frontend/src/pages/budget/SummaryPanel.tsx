@@ -26,8 +26,8 @@ interface SummaryPanelProps {
 function TrustBadge({ icon: Icon, text }: { icon: React.ElementType; text: string }) {
   return (
     <div className="flex items-center gap-2.5 text-sm text-zinc-400">
-      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/5">
-        <Icon size={14} className="text-blue-500" />
+      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-black/5">
+        <Icon size={14} className="text-amber-500" />
       </div>
       {text}
     </div>
@@ -50,13 +50,13 @@ function SummaryRow({
     <div
       className={[
         'flex items-start gap-3 rounded-xl px-3 py-3 transition-all duration-300',
-        done ? 'bg-white/5' : 'opacity-40',
+        done ? 'bg-black/5' : 'opacity-40',
       ].join(' ')}
     >
       <div
         className={[
           'mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg',
-          done ? 'bg-blue-500/15 text-blue-500' : 'bg-white/5 text-zinc-600',
+          done ? 'bg-amber-500/15 text-amber-500' : 'bg-black/5 text-zinc-600',
         ].join(' ')}
       >
         <Icon size={14} />
@@ -74,7 +74,7 @@ function SummaryRow({
           {done ? value : '—'}
         </p>
       </div>
-      {done && <CheckCircle2 size={14} className="mt-1 shrink-0 text-blue-500" />}
+      {done && <CheckCircle2 size={14} className="mt-1 shrink-0 text-amber-500" />}
     </div>
   );
 }
@@ -98,9 +98,9 @@ export function SummaryPanel({
     <aside className="hidden lg:flex flex-col gap-5 sticky top-24 h-fit">
 
       {/* ── Live summary card ── */}
-      <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5">
+      <div className="rounded-2xl border border-white/10 bg-black/5 backdrop-blur-md p-5">
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-300">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-white">
             Tu consulta
           </h3>
           {isReady && (
@@ -134,8 +134,8 @@ export function SummaryPanel({
 
         {/* Estimated time badge */}
         {problemTime && (
-          <div className="mt-4 flex items-center gap-2 rounded-xl border border-blue-500/20 bg-blue-500/5 px-3 py-2.5">
-            <Clock size={14} className="text-blue-500 shrink-0" />
+          <div className="mt-4 flex items-center gap-2 rounded-xl border border-blue-500/20 bg-amber-500/5 px-3 py-2.5">
+            <Clock size={14} className="text-amber-500 shrink-0" />
             <div>
               <p className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">
                 Tiempo estimado
@@ -161,7 +161,7 @@ export function SummaryPanel({
                 'bg-emerald-500 text-white hover:bg-emerald-400 active:scale-[0.98]',
                 'shadow-xl shadow-emerald-500/30 focus-visible:ring-emerald-400',
               ].join(' ')
-            : 'bg-white/5 border border-white/10 text-zinc-500 cursor-not-allowed',
+            : 'bg-black/5 border border-white/10 text-zinc-500 cursor-not-allowed',
         ].join(' ')}
       >
         <div className="flex items-center gap-3">
@@ -177,7 +177,7 @@ export function SummaryPanel({
       </button>
 
       {/* ── Trust badges ── */}
-      <div className="rounded-2xl border border-white/5 bg-white/3 p-4 flex flex-col gap-3">
+      <div className="rounded-2xl border border-white/5 bg-black/3 p-4 flex flex-col gap-3">
         <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-1">
           ¿Por qué elegirnos?
         </p>

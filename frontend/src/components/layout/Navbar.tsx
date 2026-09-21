@@ -100,16 +100,16 @@ export function Navbar() {
           'w-full transition-all duration-300',
           // Glass white-leaning effect
           scrolled
-            ? 'bg-white/[0.10] backdrop-blur-2xl border-b border-white/[0.12] shadow-lg shadow-black/10'
-            : 'bg-white/[0.06] backdrop-blur-xl border-b border-white/[0.08]',
+            ? 'bg-black/[0.10] backdrop-blur-2xl border-b border-white/[0.12] shadow-lg shadow-black/10'
+            : 'bg-black/[0.06] backdrop-blur-xl border-b border-white/[0.08]',
         ].join(' ')}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 lg:px-10">
 
           {/* Brand */}
           <Link to="/" onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-2.5 shrink-0">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500/15 ring-1 ring-blue-500/40">
-              <Smartphone size={17} className="text-blue-500" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500/15 ring-1 ring-amber-500/40">
+              <Smartphone size={17} className="text-amber-500" />
             </div>
             <div>
               <span className="text-base font-extrabold tracking-tight text-white">
@@ -134,8 +134,8 @@ export function Navbar() {
                   className={[
                     'px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200',
                     isActive
-                      ? 'text-white bg-white/10'
-                      : 'text-zinc-400 hover:text-white hover:bg-white/8',
+                      ? 'text-white bg-black/10'
+                      : 'text-zinc-400 hover:text-white hover:bg-black/8',
                   ].join(' ')}
                 >
                   {link.label}
@@ -148,7 +148,7 @@ export function Navbar() {
           <div className="hidden lg:flex items-center gap-3">
             <Link
               to="/presupuesto"
-              className="flex items-center gap-1.5 rounded-xl bg-blue-500 px-5 py-2.5 text-sm font-bold text-zinc-950 shadow-md shadow-blue-500/20 transition-all duration-200 hover:bg-blue-400 active:scale-95"
+              className="flex items-center gap-1.5 rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-bold text-zinc-950 shadow-md shadow-amber-500/20 transition-all duration-200 hover:bg-amber-400 active:scale-95"
             >
               Presupuestar
               <ChevronRight size={15} />
@@ -160,7 +160,7 @@ export function Navbar() {
             <Link
               to="/presupuesto"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-1 rounded-lg bg-blue-500 px-3.5 py-2 text-xs font-bold text-zinc-950"
+              className="flex items-center gap-1 rounded-lg bg-amber-500 px-3.5 py-2 text-xs font-bold text-zinc-950"
             >
               Presupuestar
               <ChevronRight size={13} />
@@ -169,7 +169,7 @@ export function Navbar() {
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-label="Abrir menú"
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/8 border border-white/10 text-zinc-300 hover:text-white transition-colors"
+              className="flex h-9 w-9 items-center justify-center rounded-xl bg-black/8 border border-white/10 text-white hover:text-white transition-colors"
             >
               {open ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -180,7 +180,7 @@ export function Navbar() {
       {/* ── Mobile dropdown ──────────────────────────────────────────────── */}
       {open && (
         <div
-          className="lg:hidden bg-white/[0.09] backdrop-blur-2xl border-b border-white/10"
+          className="lg:hidden bg-black/[0.09] backdrop-blur-2xl border-b border-white/10"
           style={{ animation: 'slideDown 0.2s ease-out' }}
         >
           <nav className="mx-auto max-w-7xl flex flex-col gap-0.5 px-5 py-3">
@@ -193,8 +193,8 @@ export function Navbar() {
                   className={[
                     'w-full text-left px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200',
                     isActive
-                      ? 'text-white bg-white/10'
-                      : 'text-zinc-300 hover:text-white hover:bg-white/8',
+                      ? 'text-white bg-black/10'
+                      : 'text-white hover:text-white hover:bg-black/8',
                   ].join(' ')}
                 >
                   {link.label}

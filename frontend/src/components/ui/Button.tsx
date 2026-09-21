@@ -12,9 +12,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClasses: Record<Variant, string> = {
   primary:
-    'bg-blue-500 text-zinc-900 font-semibold shadow-lg shadow-blue-500/30 hover:bg-blue-400 active:scale-95',
+    'bg-amber-500 text-zinc-900 font-semibold shadow-lg shadow-amber-500/30 hover:bg-amber-400 active:scale-95',
   ghost:
-    'bg-white/5 border border-white/10 text-white hover:bg-white/10 active:scale-95',
+    'bg-black/5 border border-white/10 text-white hover:bg-black/10 active:scale-95',
   whatsapp:
     'bg-emerald-500 text-white font-bold shadow-lg shadow-emerald-500/40 hover:bg-emerald-400 active:scale-95',
 };

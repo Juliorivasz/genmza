@@ -29,7 +29,7 @@ export function StickyCta({ onClick, disabled = false, ready = false }: StickyCt
           'active:scale-[0.98]',
           ready
             ? 'bg-emerald-500 text-white shadow-xl shadow-emerald-500/40 hover:bg-emerald-400 focus-visible:ring-emerald-400'
-            : 'bg-white/10 text-zinc-400 border border-white/10 focus-visible:ring-blue-500',
+            : 'bg-black/10 text-zinc-400 border border-white/10 focus-visible:ring-blue-500',
         ].join(' ')}
       >
         <div className="flex items-center gap-3">

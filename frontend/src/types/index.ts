@@ -15,6 +15,7 @@ export interface Service {
   title: string;
   subtitle: string;
   icon: string; // lucide icon name
+  image?: string;
   problems: Problem[];
 }
 
