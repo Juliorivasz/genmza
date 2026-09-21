@@ -122,12 +122,12 @@ export function HomePage() {
         {/* Hero background image */}
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1588702547919-26089e690ecc?q=80&w=1920&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1920&auto=format&fit=crop"
             alt=""
             className="h-full w-full object-cover opacity-20"
           />
           {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/90 to-zinc-950/60 lg:to-zinc-950/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/90 to-zinc-900/60 lg:to-zinc-700/30" />
           <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent" />
         </div>
 

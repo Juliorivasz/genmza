@@ -18,7 +18,7 @@ export function FloatingWhatsApp() {
   const phone = sanitizePhone(WHATSAPP_NUMBER);
   const url   = buildWhatsAppURL(
     phone,
-    `¡Hola, ${BUSINESS_NAME}! 👋 Necesito ayuda, ¿me pueden atender?`,
+    `¡Hola, ${BUSINESS_NAME}! Necesito ayuda, ¿me pueden atender?`,
   );
 
   return (
