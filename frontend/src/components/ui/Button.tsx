@@ -12,9 +12,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClasses: Record<Variant, string> = {
   primary:
-    'bg-cyan-400 text-gray-900 font-semibold shadow-lg shadow-cyan-400/30 hover:bg-cyan-300 active:scale-95',
+    'bg-amber-500 text-zinc-900 font-semibold shadow-lg shadow-amber-500/30 hover:bg-amber-400 active:scale-95',
   ghost:
-    'bg-white/5 border border-white/10 text-white hover:bg-white/10 active:scale-95',
+    'bg-black/5 border border-white/10 text-white hover:bg-black/10 active:scale-95',
   whatsapp:
     'bg-emerald-500 text-white font-bold shadow-lg shadow-emerald-500/40 hover:bg-emerald-400 active:scale-95',
 };
@@ -45,7 +45,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         className={[
           'inline-flex items-center justify-center gap-2 transition-all duration-200',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950',
           'disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100',
           variantClasses[variant],
           sizeClasses[size],

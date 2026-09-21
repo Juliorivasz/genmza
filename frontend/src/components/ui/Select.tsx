@@ -13,7 +13,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className="flex flex-col gap-1.5 w-full">
         {label && (
-          <label className="text-sm font-medium text-gray-300 pl-1">
+          <label className="text-sm font-medium text-white pl-1">
             {label}
           </label>
         )}
@@ -22,9 +22,9 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ref={ref}
             className={[
               'w-full appearance-none rounded-2xl px-4 py-3.5 pr-10',
-              'bg-white/5 backdrop-blur-sm border text-white text-base',
+              'bg-black/5 backdrop-blur-sm border text-white text-base',
               'transition-all duration-200',
-              'focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400',
+              'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
               error
                 ? 'border-red-400/60'
                 : 'border-white/10 hover:border-white/20',
@@ -43,7 +43,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
               <option
                 key={o.value}
                 value={o.value}
-                className="bg-gray-900 text-white"
+                className="bg-zinc-900 text-white"
               >
                 {o.label}
               </option>
@@ -53,7 +53,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
           {/* Custom chevron icon */}
           <ChevronDown
             size={18}
-            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400"
           />
         </div>
 

@@ -22,7 +22,8 @@
 
 body {
   margin: 0;
-  background-color: #030712; /* gray-950 */
+  background-color: #09090b;
+  /* zinc-950 */
   color: #f9fafb;
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
 }
@@ -39,6 +40,7 @@ body {
     opacity: 0;
     transform: translateY(-8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -49,7 +51,7 @@ body {
    Tailwind v4 — extend via @theme
    ============================================================ */
 @theme {
-  --color-gray-950: #030712;
+  --color-zinc-950: #09090b;
 
   --animate-slide-down: slideDown 0.3s ease-out;
 }
@@ -72,6 +74,6 @@ html {
    Native <select> option bg fix for WebKit on dark mode
    ============================================================ */
 option {
-  background-color: #111827;
+  background-color: #18181b;
   color: #f9fafb;
 }

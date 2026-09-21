@@ -17,13 +17,13 @@ export function useWhatsAppRedirect(): UseWhatsAppRedirectReturn {
       const phone = sanitizePhone(WHATSAPP_NUMBER);
 
       const lines: string[] = [
-        `¡Hola, ${BUSINESS_NAME}! 👋`,
+        `¡Hola, ${BUSINESS_NAME}!`,
         '',
         `Quiero consultar por un presupuesto:`,
         '',
-        `🔧 *Servicio:* ${serviceTitle}`,
-        `❗ *Problema:* ${problemLabel}`,
-        `📱 *Modelo del equipo:* ${data.deviceModel || 'No especificado'}`,
+        `*Servicio:* ${serviceTitle}`,
+        `*Problema:* ${problemLabel}`,
+        `*Equipo:* ${data.deviceBrand} ${data.deviceModel || 'No especificado'}`,
         '',
         `¿Me podrían dar más información? ¡Gracias!`,
       ];

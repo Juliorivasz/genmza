@@ -25,12 +25,12 @@ export function Card({
       className={[
         // Base glass surface
         'relative overflow-hidden rounded-2xl',
-        'bg-white/5 backdrop-blur-md',
+        'bg-black/5 backdrop-blur-md',
         'border transition-all duration-300',
 
         // Selected state — cyan glow
         selected
-          ? 'border-cyan-400 shadow-lg shadow-cyan-400/20 ring-1 ring-cyan-400/50'
+          ? 'border-blue-500 shadow-lg shadow-amber-500/20 ring-1 ring-amber-500/50'
           : 'border-white/10 hover:border-white/20 hover:shadow-md hover:shadow-black/30',
 
         // Cursor
@@ -43,7 +43,7 @@ export function Card({
     >
       {/* Subtle inner glow when selected */}
       {selected && (
-        <span className="pointer-events-none absolute inset-0 rounded-2xl bg-cyan-400/5" />
+        <span className="pointer-events-none absolute inset-0 rounded-2xl bg-amber-500/5" />
       )}
       {children}
     </Tag>

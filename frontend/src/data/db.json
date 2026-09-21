@@ -1,22 +1,59 @@
 {
-  "businessName": "GeneraciónX",
-  "whatsappNumber": "5491112345678",
+  "businessName": "Genmza",
+  "whatsappNumber": "2616853940",
   "services": [
     {
       "id": "celulares",
       "title": "Reparación de Celulares",
       "subtitle": "Pantallas, baterías y más",
       "icon": "Smartphone",
+      "image": "https://images.unsplash.com/photo-1639776738932-956082f0b704?q=80&w=800&auto=format&fit=crop",
       "problems": [
-        { "id": "pantalla_rota", "label": "Pantalla rota / fisurada", "estimatedTime": "1-2 hs" },
-        { "id": "bateria_agotada", "label": "Batería no carga / dura poco", "estimatedTime": "30-60 min" },
-        { "id": "camara_dañada", "label": "Cámara no funciona", "estimatedTime": "1-2 hs" },
-        { "id": "puerto_carga", "label": "Puerto de carga dañado", "estimatedTime": "1-2 hs" },
-        { "id": "microfono_altavoz", "label": "Micrófono / altavoz sin sonido", "estimatedTime": "1-3 hs" },
-        { "id": "boton_home", "label": "Botón home / encendido roto", "estimatedTime": "1-2 hs" },
-        { "id": "no_enciende", "label": "No enciende / se apaga solo", "estimatedTime": "2-4 hs" },
-        { "id": "agua", "label": "Daño por agua / líquido", "estimatedTime": "2-4 hs" },
-        { "id": "otro_cel", "label": "Otro problema", "estimatedTime": "A evaluar" }
+        {
+          "id": "pantalla_rota",
+          "label": "Pantalla rota / fisurada",
+          "estimatedTime": "1-2 hs"
+        },
+        {
+          "id": "bateria_agotada",
+          "label": "Batería no carga / dura poco",
+          "estimatedTime": "30-60 min"
+        },
+        {
+          "id": "camara_dañada",
+          "label": "Cámara no funciona",
+          "estimatedTime": "1-2 hs"
+        },
+        {
+          "id": "puerto_carga",
+          "label": "Puerto de carga dañado",
+          "estimatedTime": "1-2 hs"
+        },
+        {
+          "id": "microfono_altavoz",
+          "label": "Micrófono / altavoz sin sonido",
+          "estimatedTime": "1-3 hs"
+        },
+        {
+          "id": "boton_home",
+          "label": "Botón home / encendido roto",
+          "estimatedTime": "1-2 hs"
+        },
+        {
+          "id": "no_enciende",
+          "label": "No enciende / se apaga solo",
+          "estimatedTime": "2-4 hs"
+        },
+        {
+          "id": "agua",
+          "label": "Daño por agua / líquido",
+          "estimatedTime": "2-4 hs"
+        },
+        {
+          "id": "otro_cel",
+          "label": "Otro problema",
+          "estimatedTime": "A evaluar"
+        }
       ]
     },
     {
@@ -24,17 +61,58 @@
       "title": "Reparación de PC / Notebook",
       "subtitle": "Hardware, software y diagnóstico",
       "icon": "Laptop",
+      "image": "https://images.unsplash.com/photo-1721332154191-ba5f1534266e?q=80&w=800&auto=format&fit=crop",
       "problems": [
-        { "id": "no_enciende_pc", "label": "No enciende / pantalla negra", "estimatedTime": "1-3 hs" },
-        { "id": "lenta_pc", "label": "Muy lenta / se cuelga", "estimatedTime": "2-4 hs" },
-        { "id": "virus_malware", "label": "Virus / malware / errores", "estimatedTime": "2-4 hs" },
-        { "id": "pantalla_rota_pc", "label": "Pantalla rota / sin imagen", "estimatedTime": "2-3 hs" },
-        { "id": "teclado_touchpad", "label": "Teclado / touchpad dañado", "estimatedTime": "1-2 hs" },
-        { "id": "bateria_notebook", "label": "Batería no carga (notebook)", "estimatedTime": "30-60 min" },
-        { "id": "disco_duro", "label": "Disco duro / SSD / almacenamiento", "estimatedTime": "2-4 hs" },
-        { "id": "sistema_operativo", "label": "Formateo / reinstalación de OS", "estimatedTime": "2-4 hs" },
-        { "id": "sobrecalentamiento", "label": "Sobrecalentamiento / ventilador", "estimatedTime": "1-2 hs" },
-        { "id": "otro_pc", "label": "Otro problema", "estimatedTime": "A evaluar" }
+        {
+          "id": "no_enciende_pc",
+          "label": "No enciende / pantalla negra",
+          "estimatedTime": "1-3 hs"
+        },
+        {
+          "id": "lenta_pc",
+          "label": "Muy lenta / se cuelga",
+          "estimatedTime": "2-4 hs"
+        },
+        {
+          "id": "virus_malware",
+          "label": "Virus / malware / errores",
+          "estimatedTime": "2-4 hs"
+        },
+        {
+          "id": "pantalla_rota_pc",
+          "label": "Pantalla rota / sin imagen",
+          "estimatedTime": "2-3 hs"
+        },
+        {
+          "id": "teclado_touchpad",
+          "label": "Teclado / touchpad dañado",
+          "estimatedTime": "1-2 hs"
+        },
+        {
+          "id": "bateria_notebook",
+          "label": "Batería no carga (notebook)",
+          "estimatedTime": "30-60 min"
+        },
+        {
+          "id": "disco_duro",
+          "label": "Disco duro / SSD / almacenamiento",
+          "estimatedTime": "2-4 hs"
+        },
+        {
+          "id": "sistema_operativo",
+          "label": "Formateo / reinstalación de OS",
+          "estimatedTime": "2-4 hs"
+        },
+        {
+          "id": "sobrecalentamiento",
+          "label": "Sobrecalentamiento / ventilador",
+          "estimatedTime": "1-2 hs"
+        },
+        {
+          "id": "otro_pc",
+          "label": "Otro problema",
+          "estimatedTime": "A evaluar"
+        }
       ]
     },
     {
@@ -42,12 +120,33 @@
       "title": "Protectores de Pantalla",
       "subtitle": "Vidrio templado y láminas",
       "icon": "Shield",
+      "image": "https://images.unsplash.com/photo-1694878981905-b742a32f8121?q=80&w=800&auto=format&fit=crop",
       "problems": [
-        { "id": "vidrio_templado", "label": "Vidrio templado estándar", "estimatedTime": "15 min" },
-        { "id": "vidrio_privacidad", "label": "Vidrio de privacidad", "estimatedTime": "15 min" },
-        { "id": "lamina_hidrogel", "label": "Lámina de hidrogel", "estimatedTime": "15 min" },
-        { "id": "lamina_mate", "label": "Lámina mate anti-reflejo", "estimatedTime": "15 min" },
-        { "id": "camara_protector", "label": "Protector de cámara", "estimatedTime": "10 min" }
+        {
+          "id": "vidrio_templado",
+          "label": "Vidrio templado estándar",
+          "estimatedTime": "15 min"
+        },
+        {
+          "id": "vidrio_privacidad",
+          "label": "Vidrio de privacidad",
+          "estimatedTime": "15 min"
+        },
+        {
+          "id": "lamina_hidrogel",
+          "label": "Lámina de hidrogel",
+          "estimatedTime": "15 min"
+        },
+        {
+          "id": "lamina_mate",
+          "label": "Lámina mate anti-reflejo",
+          "estimatedTime": "15 min"
+        },
+        {
+          "id": "camara_protector",
+          "label": "Protector de cámara",
+          "estimatedTime": "10 min"
+        }
       ]
     }
   ]

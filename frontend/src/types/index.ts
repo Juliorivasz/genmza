@@ -15,6 +15,7 @@ export interface Service {
   title: string;
   subtitle: string;
   icon: string; // lucide icon name
+  image?: string;
   problems: Problem[];
 }
 
@@ -28,5 +29,6 @@ export interface ServicesDB {
 export interface BudgetFormValues {
   serviceId: ServiceCategory | '';
   problemId: string;
+  deviceBrand: string;
   deviceModel: string;
 }
